@@ -117,9 +117,25 @@ python manage.py runserver
 
 Leave the terminal open. Hold **Ctrl** and click the `http://127.0.0.1:8000/` link in the terminal, or type that address into a browser.
 
-You should see Django's **"The install worked successfully!"** page (this page will change as we build the site).
+You should see the **CourseCard welcome page** with a dark menu bar at the top. The menu links (Today, Courses, Calendar) open placeholder pages that we are still building.
 
 To stop the site: click inside the terminal and press **Ctrl+C**. (If it doesn't stop, click the trash can icon at the top of the terminal, then open a new terminal.)
+
+---
+
+## Optional: add a test course
+
+Your database starts empty, so to see courses you add one yourself in Django's built-in admin page. You only make the admin account once.
+
+1. Stop the site (Ctrl+C), then run:
+
+```
+python manage.py createsuperuser
+```
+
+2. Type a username. You can leave the email blank (just press Enter). Then type a password. You will not see anything while you type it. That is normal. If it warns that the password is too short or too common, type `y` to keep it. This account only lives on your own PC.
+3. Run `python manage.py runserver` again and open http://127.0.0.1:8000/admin/ in a browser. Log in with the account you just made.
+4. Click **Courses**, then **Add course**. Fill in the boxes, choose yourself in the **User** box, and click **Save**.
 
 ---
 
@@ -145,14 +161,33 @@ python manage.py migrate
 
 ## Working together (GitHub Desktop)
 
-1. At the start of each work session: **Fetch origin** in GitHub Desktop, then **Pull origin** if it appears.
+We each work on our own **branch**. A branch is your own line of work inside the same project, so you can save and push half-finished work without breaking the other person. `main` is the branch that always has the working site. Harith works on the branch `Harith` and Stefanos works on the branch `Stefanos`.
+
+**First time only: make your branch**
+
+1. In GitHub Desktop, click **Current Branch** at the top, then **New Branch**.
+2. Type your name (`Harith` or `Stefanos`), leave it based on `main`, and click **Create Branch**.
+3. Click **Publish branch** at the top, so your branch is on GitHub too.
+
+**Every work session**
+
+1. Click **Fetch origin**. Then click **Branch** in the top menu, then **Update from main**. This brings the newest working code from `main` into your branch. Do it at the start of every session so your branch never drifts far from `main`.
 2. Make your changes in VS Code and save the files.
-3. In GitHub Desktop, your changed files show on the left. Write a short summary of what you did (bottom left), then click **Commit to main**.
-4. Click **Push origin** at the top. Now your partner can pull your work.
+3. In GitHub Desktop, your changed files show on the left. Write a short summary of what you did (bottom left), then click the blue **Commit** button (it shows your branch name).
+4. Click **Push origin** at the top.
 5. Push small, working changes often.
-6. Only one person should change `models.py` at a time. If two people change it together, Django can make two clashing database files.
-7. `venv` and `db.sqlite3` stay on your own PC and are never pushed. Everyone has their own database.
-8. To add a new package: run `python -m pip install <name>`, then `python -m pip freeze | Out-File requirements.txt -Encoding ascii`, then commit `requirements.txt`. (The `Out-File ... -Encoding ascii` part matters: plain `>` in PowerShell saves the file in a format that looks garbled on GitHub.)
+
+**When a page works: put it into main**
+
+1. Click **Branch** in the top menu, then **Create pull request**. Your web browser opens GitHub.
+2. Click **Create pull request** there, tell your partner, then click **Merge pull request**. Now `main` has your page.
+3. If GitHub says there is a conflict, stop and message your partner before clicking anything else.
+
+**Rules to avoid trouble**
+
+- Only one person should change `models.py` at a time. If two people change it together, Django can make two clashing database files.
+- `venv` and `db.sqlite3` stay on your own PC and are never pushed. Everyone has their own database.
+- To add a new package: run `python -m pip install <name>`, then `python -m pip freeze | Out-File requirements.txt -Encoding ascii`, then commit `requirements.txt`. (The `Out-File ... -Encoding ascii` part matters: plain `>` in PowerShell saves the file in a format that looks garbled on GitHub.)
 
 ---
 
