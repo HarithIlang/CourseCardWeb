@@ -2,5 +2,23 @@
 
 {% block content %}
     <h1>My courses</h1>
-    <p>Placeholder: the list of the student's courses goes here (Stefanos).</p>
+
+    <section>
+        <h2>Input course</h2>
+        <p>Placeholder: the box to add a course goes here (Stefanos).</p>
+    </section>
+
+    <section>
+        <h2>Course list</h2>
+        <p>Placeholder: one box per course goes here (Stefanos).</p>
+    </section>
+
+    <section>
+        <h2>Selected course details</h2>
+        {% if selected_id %}
+            <p>Showing course number {{ selected_id }}.</p>
+        {% else %}
+            <p>Placeholder: no course picked yet (Stefanos).</p>
+        {% endif %}
+    </section>
 {% endblock %}
