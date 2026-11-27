@@ -8,7 +8,12 @@
 </head>
 <body>
     <header>
-        <strong>CourseCard</strong>
+        <a href="{% url 'home' %}"><strong>CourseCard</strong></a>
+        <nav>
+            <a href="{% url 'today' %}">Today</a>
+            <a href="{% url 'courses' %}">Courses</a>
+            <a href="{% url 'calendar' %}">Calendar</a>
+        </nav>
     </header>
 
     <main>
