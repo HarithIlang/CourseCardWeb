@@ -1,24 +1,121 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1>My courses</h1>
+    {% if needs_login %}
+        <h1>My Courses</h1>
+        <p>Please log in to see your courses. For now, log in at <a href="/admin/">/admin/</a>, then come back to this page.</p>
+    {% else %}
+    <div class="courses-layout">
 
-    <section>
-        <h2>Input course</h2>
-        <p>Placeholder: the box to add a course goes here (Stefanos).</p>
-    </section>
+        <!-- Add Course -->
+        <form method="post" action="{% url 'courses' %}" class="input-card">
+            {% csrf_token %}
+            <div class="input-card-top">
+                <h2>Add Course</h2>
+                <button type="submit" class="btn btn-dark">Add</button>
+            </div>
+            {% include 'course_form_fields.html' with form=form %}
+        </form>
 
-    <section>
-        <h2>Course list</h2>
-        <p>Placeholder: one box per course goes here (Stefanos).</p>
-    </section>
+        <!-- Course list and edit form -->
+        <div class="courses-list">
+            {% for course in courses %}
+                {% if editing and editing.id == course.id %}
+                <form method="post" action="{% url 'course_edit' course.id %}" class="course-card course-card-editing">
+                    {% csrf_token %}
+                    <div class="input-card-top">
+                        <h2>Edit {{ course.code }}</h2>
+                        <div class="input-card-buttons">
+                            <a href="{% url 'course_details' course.id %}" class="btn btn-light">Cancel</a>
+                            <button type="submit" class="btn btn-dark">Save</button>
+                        </div>
+                    </div>
+                    {% include 'course_form_fields.html' with form=edit_form %}
+                </form>
+                {% else %}
+                <div class="course-card{% if selected and selected.id == course.id %} course-card-selected{% endif %}">
+                    <a href="{% url 'course_details' course.id %}" class="course-card-info">
+                        <span class="course-card-code">{{ course.code }}</span>
+                        <span class="course-card-name">{{ course.name }}</span>
+                        <span class="course-card-time">{{ course.meetingDays }} · {{ course.startTime|time:"g:i A" }} to {{ course.endTime|time:"g:i A" }}</span>
+                    </a>
+                    <div class="course-card-buttons">
+                        <a href="{% url 'course_edit' course.id %}" class="btn btn-light">Edit</a>
+                        <!-- Confirm before sending the delete request. -->
+                        <form method="post" action="{% url 'course_delete' course.id %}"
+                              onsubmit="return confirm('Delete {{ course.code|escapejs }}?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            {% empty %}
+                <p class="empty-note">You have not added any courses yet. Fill in the box above and click Add.</p>
+            {% endfor %}
+        </div>
 
-    <section>
-        <h2>Selected course details</h2>
-        {% if selected_id %}
-            <p>Showing course number {{ selected_id }}.</p>
-        {% else %}
-            <p>Placeholder: no course picked yet (Stefanos).</p>
-        {% endif %}
-    </section>
+        <!-- Selected course details -->
+        <section class="details-panel">
+            {% if selected %}
+                <!-- Header box: name and time on the left, professor on the right -->
+                <div class="details-header">
+                    <div>
+                        <h2>{{ selected.code }}: {{ selected.name }}</h2>
+                        <p class="details-time">{{ selected.meetingDays }}, {{ selected.startTime|time:"g:i A" }} to {{ selected.endTime|time:"g:i A" }}</p>
+                    </div>
+                    <div class="details-professor">
+                        <span class="details-label">Professor</span>
+                        {{ selected.professorName }}
+                    </div>
+                </div>
+
+                <!-- Details box: two groups side by side, each a list of label / value rows -->
+                <div class="details-body">
+                    <div class="detail-group">
+                        <h3 class="detail-group-title">Class</h3>
+                        <div class="detail-item">
+                            <span class="details-label">Meeting Days</span>
+                            <span class="detail-value">{{ selected.meetingDays }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="details-label">Class Time</span>
+                            <span class="detail-value">{{ selected.startTime|time:"g:i A" }} to {{ selected.endTime|time:"g:i A" }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="details-label">Location</span>
+                            <span class="detail-value">{{ selected.building }}, Room {{ selected.room }}</span>
+                        </div>
+                    </div>
+                    <div class="detail-group">
+                        <h3 class="detail-group-title">Professor</h3>
+                        <div class="detail-item">
+                            <span class="details-label">Name</span>
+                            <span class="detail-value">{{ selected.professorName }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="details-label">Office Hours</span>
+                            <span class="detail-value">{% if selected.officeHours %}{{ selected.officeHours }}{% else %}<span class="detail-empty">N/A</span>{% endif %}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="details-label">Office Location</span>
+                            <span class="detail-value">{% if selected.officeLocation %}{{ selected.officeLocation }}{% else %}<span class="detail-empty">N/A</span>{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="details-header">
+                    <h2>Course Content</h2>
+                </div>
+                <div class="details-body details-empty">
+                    <p>Click a course on the left to see its details here.</p>
+                </div>
+            {% endif %}
+        </section>
+
+    </div>
+
+    <script src="{% static 'js/courses.js' %}"></script>
+    {% endif %}
 {% endblock %}
