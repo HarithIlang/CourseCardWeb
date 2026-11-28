@@ -1,3 +1,4 @@
+/* Page header */
 header {
     background-color: #1f2937;
     color: white;
@@ -15,4 +16,370 @@ header a {
 header nav {
     display: flex;
     gap: 16px;
+}
+
+/* Page layout */
+main {
+    padding: 20px;
+}
+
+.courses-layout {
+    background-color: #f3f4f6;
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #111827;
+    display: grid;
+    grid-template-columns: minmax(320px, 2fr) 3fr;
+    gap: 14px 24px;
+    align-items: start;
+}
+
+.input-card {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    align-self: stretch;
+}
+
+.details-panel {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    align-self: start;
+}
+
+.courses-list {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+/* Shared layouts and cards */
+.details-panel, .courses-list, .form-row, .course-card-info, .details-professor, .detail-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.details-panel, .courses-list {
+    gap: 14px;
+}
+
+.input-card-top, .course-card, .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-card, .course-card, .details-header, .details-body {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.input-card, .course-card {
+    padding: 16px;
+}
+
+.input-card, .course-card, .details-body {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.input-card:hover, .course-card:hover, .course-card-selected {
+    border-color: #1f2937;
+    box-shadow: 0 0 0 2px #1f2937, 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.course-card-selected:hover {
+    box-shadow: 0 0 0 4px #1f2937, 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Add Course box */
+.input-card-top {
+    margin-bottom: 12px;
+}
+
+.input-card-top h2 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.input-card-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+/* Form fields */
+.form-row input, .days-summary, .days-options {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+.form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+}
+
+.form-row {
+    width: 45%;
+    flex-grow: 1;
+}
+
+.form-row label, .form-row .form-label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4b5563;
+    margin-bottom: 4px;
+}
+
+.form-row input, .days-summary {
+    padding: 7px 8px;
+    font-size: 23px;
+}
+
+.form-row > input:hover, .days-summary:hover {
+    border-color: #1f2937;
+    box-shadow: 0 0 0 1px #1f2937;
+}
+
+.form-error {
+    color: #b91c1c;
+    font-size: 20px;
+    margin: 4px 0 0;
+}
+
+/* Meeting days dropdown */
+.days-dropdown, .days-summary {
+    position: relative;
+}
+
+.days-summary {
+    cursor: pointer;
+    background-color: white;
+}
+
+.days-summary-empty {
+    color: #9ca3af;
+}
+
+.days-options {
+    margin-top: 4px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    padding: 6px;
+}
+
+.days-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.days-options label:hover {
+    background-color: #f3f4f6;
+}
+
+.form-row .days-options input {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin: 0;
+}
+
+/* Buttons */
+.btn-light, .btn-danger {
+    background-color: white;
+}
+
+.btn {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-dark {
+    background-color: #1f2937;
+    color: white;
+}
+
+.btn-dark:hover {
+    background-color: #374151;
+}
+
+.btn-light {
+    color: #1f2937;
+    border-color: #d1d5db;
+}
+
+.btn-light:hover {
+    background-color: #f3f4f6;
+}
+
+.btn-danger {
+    color: #b91c1c;
+    border-color: #fca5a5;
+}
+
+.btn-danger:hover {
+    background-color: #fef2f2;
+}
+
+/* Course cards */
+.course-card {
+    gap: 12px;
+}
+
+.course-card-editing, .course-card-editing:hover {
+    display: block;
+    border-color: #1f2937;
+    box-shadow: 0 0 0 2px #1f2937;
+}
+
+.course-card-info {
+    gap: 2px;
+    color: inherit;
+    text-decoration: none;
+    flex: 1;
+}
+
+.course-card-code {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.course-card-name {
+    color: #374151;
+}
+
+.course-card-time {
+    font-size: 21px;
+    color: #6b7280;
+}
+
+.course-card-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.course-card-buttons form {
+    margin: 0;
+}
+
+.empty-note {
+    color: #6b7280;
+}
+
+/* Course details */
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background-color: #1f2937;
+    border-color: #1f2937;
+    color: white;
+}
+
+.details-header h2 {
+    margin: 0 0 6px;
+    font-size: 34px;
+}
+
+.details-time {
+    margin: 0;
+    color: #d1d5db;
+}
+
+.details-professor {
+    text-align: right;
+    font-size: 26px;
+}
+
+.details-header .details-label {
+    color: #9ca3af;
+}
+
+.details-label {
+    font-size: 19px;
+    font-weight: bold;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.details-body {
+    display: flex;
+    gap: 32px;
+    padding: 20px 24px;
+    flex: 1;
+}
+
+.detail-group {
+    flex: 1;
+    gap: 6px;
+}
+
+.detail-group-title {
+    margin: 0 0 4px;
+    font-size: 22px;
+    color: #1f2937;
+}
+
+.detail-item {
+    gap: 16px;
+    padding: 4px 0;
+}
+
+.detail-item .details-label {
+    margin-bottom: 0;
+}
+
+.detail-value {
+    font-size: 23px;
+    font-weight: 600;
+    color: #111827;
+    text-align: right;
+}
+
+.detail-empty {
+    font-size: 21px;
+    font-weight: normal;
+    color: #9ca3af;
+}
+
+.details-empty {
+    display: block;
+    color: #6b7280;
+}
+
+/* Small screens */
+@media (max-width: 800px) {
+    .courses-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .details-panel {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    .courses-list {
+        grid-row: 3 / 4;
+    }
+
+    .form-row {
+        width: 100%;
+    }
+
+    .details-body {
+        flex-direction: column;
+    }
 }
